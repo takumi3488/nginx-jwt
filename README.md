@@ -1,15 +1,19 @@
-# nginx-bearer-authentication
+# nginx-jwt
 
-Nginx module for Bearer authentication. Currently only `x86_64-unknown-linux-gnu` is supported.
+Nginx module providing JWT authentication and login page. Currently only `x86_64-unknown-linux-gnu` is supported.
 
 ## Usage
 
-Download `libbearerauth.so` from Releases page and put it in `/etc/nginx/modules`.
+Download `libjwt.so` from Releases page and put it in `/etc/nginx/modules`.
 
-Set the config file as follows, and start Nginx, the Bearer token will be required for pages with `/private` prefix.
+Set the config file as follows, and start Nginx, the JWT will be required for pages with `/private` prefix. Redirect to `/login` if JWT is not sent or is invalid.
 
 ```
+location = /login {
+       alias /usr/share/nginx/html/login.html;
+}
+
 location /private {
-       bearer_auth PUT_HASHED_TOKEN_HERE;
+       jwt YOUR_256_BIT_SECRET /login;
 }
 ```
