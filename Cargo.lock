@@ -1142,7 +1142,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "nginx-bearer-authentication"
+name = "nginx-jwt"
 version = "0.1.0"
 dependencies = [
  "chrono",
