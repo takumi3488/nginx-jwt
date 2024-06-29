@@ -1,0 +1,24 @@
+[package]
+name = "nginx-bearer-authentication"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+
+[dependencies]
+ngx = { git = "https://github.com/nginxinc/ngx-rust", branch = "master" }
+chrono = "0.4.38"
+http = "1.1.0"
+libc = "0.2.155"
+tokio = { version = "1.38.0", features = ["full"] }
+testcontainers = "0.18.0"
+reqwest = "0.12.5"
+sha2 = "0.10.8"
+
+[lib]
+crate-type = ["cdylib"]
+name = "bearerauth"
+
+[features]
+default = ["export-modules"]
+export-modules = []
+linux = []
