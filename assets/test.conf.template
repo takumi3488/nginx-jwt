@@ -1,6 +1,6 @@
 daemon off;
 
-load_module /etc/nginx/modules/libbearerauth.so;
+load_module /etc/nginx/modules/libjwt.so;
 
 events {}
 
@@ -16,7 +16,7 @@ http {
 
         location /private {
             alias /usr/share/nginx/html/index.html;
-            bearer_auth $BEARER_TOKEN;
+            jwt $BEARER_TOKEN;
         }
 
         error_page 403 /403.html;
