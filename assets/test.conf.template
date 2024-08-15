@@ -6,9 +6,7 @@ events {}
 
 http {
     server {
-        listen *;
         server_name localhost;
-        root /usr/share/nginx/html;
 
         location /public {
             alias /usr/share/nginx/html/index.html;
@@ -16,9 +14,17 @@ http {
 
         location /private {
             alias /usr/share/nginx/html/index.html;
-            jwt $BEARER_TOKEN;
+            jwt $JWT_SECRET http://login:3000/login;
         }
 
         error_page 403 /403.html;
+    }
+
+    server {
+        server_name login;
+
+        location / {
+            proxy_pass http://login:3000/login;
+        }
     }
 }

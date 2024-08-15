@@ -1,0 +1,33 @@
+version: "3"
+
+tasks:
+  default:
+    env:
+      TOKEN: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjc5NTUxODc3NDJ9.l5PJbjxZJnbt1wI3qRMlMgkJVRKxeTokD3K_AM6ZxCs
+    aliases:
+      - e2e
+    cmds:
+      - task: up:d
+      - cargo test --verbose
+
+  lint:
+    cmds:
+      - cargo sort
+      - cargo clippy --fix --allow-dirty --allow-staged --all-targets --all-features
+      - cargo fmt --all
+
+  up:
+    cmds:
+      - NGX_VERSION=1.27.0 cargo build --release --target x86_64-unknown-linux-gnu
+      - cp target/x86_64-unknown-linux-gnu/release/libjwt.so assets/libjwt.so
+      - docker compose up --build nginx
+
+  up:d:
+    cmds:
+      - NGX_VERSION=1.27.0 cargo build --release --target x86_64-unknown-linux-gnu
+      - cp target/x86_64-unknown-linux-gnu/release/libjwt.so assets/libjwt.so
+      - docker compose up --build -d nginx
+
+  down:
+    cmds:
+      - docker compose down
